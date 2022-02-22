@@ -1,4 +1,4 @@
-<div class="Example">
+<div class="prose">
     <div class="Example__inner">
 
         <h1 class="Example__title">WP Laravel Mix Theme Boilerplate</h1>
@@ -15,13 +15,13 @@
             <a href="https://laravel.com/docs/5.8/mix" target="_blank">You can learn more about Laravel Mix here.</a>
         </p>
 
-		<?php
-		// You may use 'views' to render your UI components. Views are designed for use anywhere as they, ideally, have
-		// no context-specific functionality – the simply render data handed to them as follows:
-		\WPLMixTheme\View::render( 'ExampleView', [
-			'title' => 'Who am I?',
-			'text' => 'My name is Phil Kurth and I build themes and plugins for WordPress. You can learn more about me at <a href="https://philkurth.com.au/" target="_blank">philkurth.com.au</a>',
-		] ); ?>
+        <?php
+        // You may use 'views' to render your UI components. Views are designed for use anywhere as they, ideally, have
+        // no context-specific functionality – the simply render data handed to them as follows:
+        \WPLMixTheme\View::render('ExampleView', [
+            'title' => 'Who am I?',
+            'text' => 'My name is Phil Kurth and I build themes and plugins for WordPress. You can learn more about me at <a href="https://philkurth.com.au/" target="_blank">philkurth.com.au</a>',
+        ]); ?>
 
     </div>
 </div>
