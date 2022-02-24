@@ -1,3 +1,11 @@
+import { createApp, h } from 'vue'
+import MainNavigation from './components/MainNavigation.vue';
+
+const mainNav = createApp({
+  render: () => h(MainNavigation)
+});
+mainNav.mount("#mainnavigation")
+
 // you can import modules from the theme lib or even from
 // NPM packages if they support it…
 import ExampleComponent1 from "./components/ExampleComponent1";
