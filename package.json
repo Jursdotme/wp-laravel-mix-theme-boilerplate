@@ -6,11 +6,13 @@
     "test": "tests"
   },
   "scripts": {
-    "javascript": "mix",
-    "javascript watch": "mix watch",
-    "tailwind": "npx tailwindcss -i ./assets/css/app.css -o ./public/css/app.css",
-    "tailwind watch": "npx tailwindcss -i ./assets/css/app.css -o ./public/css/app.css --watch",
-    "production": "mix --production && npx tailwindcss --minify ./assets/css/app.css -o ./public/css/app.css"
+    "dev": "npm run development",
+    "development": "TAILWIND_MODE=build mix",
+    "watch": "mix watch",
+    "watch-poll": "mix watch -- --watch-options-poll=1000",
+    "hot": "mix watch --hot",
+    "prod": "npm run production",
+    "production": "mix --production"
   },
   "author": "Phil Kurth <phil@philkurth.com.au>",
   "license": "MIT",
