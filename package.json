@@ -12,7 +12,9 @@
     "watch-poll": "cross-env NODE_ENV=development mix watch -- --watch-options-poll=1000",
     "hot": "mix watch --hot",
     "prod": "npm run production",
-    "production": "cross-env NODE_ENV=production mix --production"
+    "production": "cross-env NODE_ENV=production mix --production",
+    "start-wp-env": "wp-env start",
+    "stop-wp-env": "wp-env stop"
   },
   "author": "Phil Kurth <phil@philkurth.com.au>",
   "license": "MIT",
