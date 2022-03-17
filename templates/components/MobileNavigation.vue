@@ -1,6 +1,6 @@
 <template>
   <!-- This example requires Tailwind CSS v2.0+ -->
-  <div class="flex justify-end md:relative" id="mainNav">
+  <div class="flex justify-end md:relative flex md:hidden" id="mainNav">
     <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" -->
     <button
       @click="isOpen = !isOpen"
@@ -141,7 +141,7 @@ export default {
   created() {
     // when the Vue app is booted up, this is run automatically.
     axios
-      .get('http://laravel-mix-theme-boilerplate.local/wp-json/wp/v2/primary_mobile_menu')
+      .get('http://localhost:8888/wp-json/wp/v2/primary_mobile_menu')
       .then((response) => {
         this.primaryItems = response.data
 
@@ -163,7 +163,7 @@ export default {
       })
 
     axios
-      .get('http://laravel-mix-theme-boilerplate.local/wp-json/wp/v2/secondary_mobile_menu')
+      .get('http://localhost:8888/wp-json/wp/v2/secondary_mobile_menu')
       .then((response) => {
         this.secondaryItems = response.data
       })
