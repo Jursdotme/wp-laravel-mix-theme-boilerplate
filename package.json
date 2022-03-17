@@ -8,7 +8,7 @@
   "scripts": {
     "dev": "npm run development",
     "development": "cross-env NODE_ENV=development TAILWIND_MODE=build mix",
-    "watch": "mix watch",
+    "watch": "cross-env NODE_ENV=development mix watch",
     "watch-poll": "cross-env NODE_ENV=development mix watch -- --watch-options-poll=1000",
     "hot": "mix watch --hot",
     "prod": "npm run production",
