@@ -1,6 +1,7 @@
 module.exports = {
   content: [
     './templates/**/**/*.php',
+    './templates/**/**/*.vue',
     './header.php',
     './index.php',
     './footer.php'
