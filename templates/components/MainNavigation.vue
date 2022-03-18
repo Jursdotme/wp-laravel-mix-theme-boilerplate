@@ -1,9 +1,12 @@
 <template>
   <nav class="hidden md:flex space-x-10">
-    <large-dropdown />
+    <template v-for="(item, index) in menuItems" :key="index">
+      <component v-bind:is="itemType(item)" :item="item"></component>
+    </template>
+    <!-- <large-dropdown />
     <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900"> Pricing </a>
     <a href="#" class="text-base font-medium text-gray-500 hover:text-gray-900"> Docs </a>
-    <small-dropdown />
+    <small-dropdown /> -->
   </nav>
 </template>
 
@@ -11,86 +14,57 @@
 import axios from 'axios'
 import LargeDropdown from './MainMenu/LargeDropdown.vue'
 import SmallDropdown from './MainMenu/SmallDropdown.vue'
+import SimpleLink from './MainMenu/SimpleLink.vue'
 export default {
-  components: { LargeDropdown, SmallDropdown },
+  components: { LargeDropdown, SmallDropdown, SimpleLink },
 
   data() {
     return {
-      isOpen: false,
-      previousItem: 0,
-      currentItem: 0,
-      primaryItems: [],
-      secondaryItems: [],
+      menuItems: [],
     }
   },
+
   methods: {
-    traverse(link) {
-      this.previousItem = this.currentItem
-      this.currentItem = link
-    },
-    hasChildren(item) {
-      return this.primaryItems.hasOwnProperty(item.ID)
-    },
-  },
-  computed: {
-    getChildrenNavItems() {
-      let children = []
-      let grandChildren = []
-
-      for (item of this.menuItems) {
-        if (item.children) {
-          let items = {
-            parent: item.label,
-            items: item.children,
-          }
-          children.push(items)
-        }
+    itemType: function (item) {
+      if (item.children === undefined || item.children.length == 0) {
+        return 'SimpleLink'
+      } else {
+        return 'SmallDropdown'
       }
-
-      for (item of children) {
-        for (item of item.items) {
-          if (item.children) {
-            let items = {
-              parent: item.label,
-              items: item.children,
-            }
-            grandChildren.push(items)
-          }
-        }
-      }
-
-      return [...children, ...grandChildren]
     },
   },
 
   created() {
     // when the Vue app is booted up, this is run automatically.
     axios
-      .get('http://localhost:8888/wp-json/wp/v2/primary_mobile_menu')
+      .get('http://localhost:8888/wp-json/wp/v2/primary_desktop_menu')
       .then((response) => {
-        this.primaryItems = response.data
-
         let input = response.data
-        const groupBy = (array, key) => {
-          // Return the end result
-          return array.reduce((result, currentValue) => {
-            // If an array already present for key, push it to the array. Else create an array and push the object
-            ;(result[currentValue[key]] = result[currentValue[key]] || []).push(currentValue)
 
-            // Return the current iteration `result` value, this will be taken as next iteration `result` value and accumulate
-            return result
-          }, {}) // empty object is the initial value for result object
+        let output = []
+
+        for (const menuItem of input) {
+          let parentId = menuItem['menu_item_parent']
+          if (parentId == 0) {
+            output.push(menuItem)
+          } else {
+            parent = output.find((item) => {
+              if (item.ID == parentId) {
+                return true
+              } else {
+                return false
+              }
+            })
+
+            if ('children' in parent) {
+              parent.children.push(menuItem)
+            } else {
+              parent.children = [menuItem]
+            }
+          }
         }
-        this.primaryItems = groupBy(input, 'menu_item_parent')
-      })
-      .catch((error) => {
-        console.log(error)
-      })
 
-    axios
-      .get('http://localhost:8888/wp-json/wp/v2/secondary_mobile_menu')
-      .then((response) => {
-        this.secondaryItems = response.data
+        this.menuItems = output
       })
       .catch((error) => {
         console.log(error)

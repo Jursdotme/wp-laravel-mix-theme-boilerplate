@@ -2,7 +2,7 @@
   <div class="relative">
     <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" -->
     <button @click="isOpen = !isOpen" type="button" class="text-gray-500 group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-expanded="false">
-      <span>More</span>
+      <span>{{ item.title }}</span>
       <!--
             Heroicon name: solid/chevron-down
 
@@ -26,24 +26,9 @@
     <div v-if="isOpen" class="absolute z-10 left-1/2 transform -translate-x-1/2 mt-3 px-2 w-screen max-w-xs sm:px-0">
       <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
         <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
-          <a href="#" class="-m-3 p-3 block rounded-md hover:bg-gray-50">
-            <p class="text-base font-medium text-gray-900">Help Center</p>
-            <p class="mt-1 text-sm text-gray-500">Get all of your questions answered in our forums or contact support.</p>
-          </a>
-
-          <a href="#" class="-m-3 p-3 block rounded-md hover:bg-gray-50">
-            <p class="text-base font-medium text-gray-900">Guides</p>
-            <p class="mt-1 text-sm text-gray-500">Learn how to maximize our platform to get the most out of it.</p>
-          </a>
-
-          <a href="#" class="-m-3 p-3 block rounded-md hover:bg-gray-50">
-            <p class="text-base font-medium text-gray-900">Events</p>
-            <p class="mt-1 text-sm text-gray-500">See what meet-ups and other events we might be planning near you.</p>
-          </a>
-
-          <a href="#" class="-m-3 p-3 block rounded-md hover:bg-gray-50">
-            <p class="text-base font-medium text-gray-900">Security</p>
-            <p class="mt-1 text-sm text-gray-500">Understand how we take your privacy seriously.</p>
+          <a v-for="(subItem, index) in item.children" :key="index" :href="subItem.url" class="-m-3 p-3 block rounded-md hover:bg-gray-50">
+            <p class="text-base font-medium text-gray-900">{{ subItem.title }}</p>
+            <p class="mt-1 text-sm text-gray-500">{{ subItem.description }}</p>
           </a>
         </div>
       </div>
@@ -57,6 +42,15 @@ export default {
     return {
       isOpen: false,
     }
+  },
+  props: {
+    item: {
+      type: Object,
+      required: true,
+      default: function () {
+        return {}
+      },
+    },
   },
 }
 </script>

@@ -13,6 +13,12 @@ function register_my_menus() {
   );
 }
 
+function get_primary_desktop_menu() {
+  $menus = get_nav_menu_locations();
+  // Replace your menu name, slug or ID carefully
+  return wp_get_nav_menu_items($menus['primary-desktop-menu']);
+}
+
 function get_primary_mobile_menu() {
   $menus = get_nav_menu_locations();
   // Replace your menu name, slug or ID carefully
@@ -29,6 +35,12 @@ function get_secondary_mobile_menu() {
 
 
 add_action('rest_api_init', function () {
+  register_rest_route('wp/v2', 'primary_desktop_menu', array(
+    'methods'  => WP_REST_Server::READABLE,
+    // 'methods' => 'GET',
+    'callback' => 'get_primary_desktop_menu',
+    'permission_callback' => '__return_true'
+  ));
   register_rest_route('wp/v2', 'primary_mobile_menu', array(
     'methods'  => WP_REST_Server::READABLE,
     // 'methods' => 'GET',
@@ -42,3 +54,29 @@ add_action('rest_api_init', function () {
     'permission_callback' => '__return_true'
   ));
 });
+
+
+function acf_location_rules_types($choices) {
+  $choices['Menu']['menu_level'] = 'Menu Depth';
+  return $choices;
+}
+
+add_filter('acf/location/rule_types', 'acf_location_rules_types');
+
+add_filter('acf/location/rule_values/menu_level', 'acf_location_rule_values_level');
+function acf_location_rule_values_level($choices) {
+  $choices[0] = '0';
+  $choices[1] = '1';
+
+  return $choices;
+}
+add_filter('acf/location/rule_match/menu_level', 'acf_location_rule_match_level', 10, 4);
+function acf_location_rule_match_level($match, $rule, $options, $field_group) {
+  $current_screen = get_current_screen();
+  if ($current_screen->base == 'nav-menus') {
+    if ($rule['operator'] == "==") {
+      $match = ($options['nav_menu_item_depth'] == $rule['value']);
+    }
+  }
+  return $match;
+}
