@@ -16,7 +16,18 @@ function register_my_menus() {
 function get_primary_desktop_menu() {
   $menus = get_nav_menu_locations();
   // Replace your menu name, slug or ID carefully
-  return wp_get_nav_menu_items($menus['primary-desktop-menu']);
+  $items = wp_get_nav_menu_items($menus['primary-desktop-menu']);
+
+  foreach ((array) $items as $key => $item) {
+
+    $item_id = $item->object_id;
+    $item->dropdown_type = get_field('dropdown_type', $item_id);
+    $item->featured = get_field('featured', $item_id);
+    $item->pill_label = get_field('pill_label', $item_id);
+    $item->icon = get_field('icon', $item_id);
+  }
+
+  return $items;
 }
 
 function get_primary_mobile_menu() {
@@ -61,16 +72,16 @@ function acf_location_rules_types($choices) {
   return $choices;
 }
 
-add_filter('acf/location/rule_types', 'acf_location_rules_types');
+// add_filter('acf/location/rule_types', 'acf_location_rules_types');
 
-add_filter('acf/location/rule_values/menu_level', 'acf_location_rule_values_level');
+// add_filter('acf/location/rule_values/menu_level', 'acf_location_rule_values_level');
 function acf_location_rule_values_level($choices) {
   $choices[0] = '0';
   $choices[1] = '1';
 
   return $choices;
 }
-add_filter('acf/location/rule_match/menu_level', 'acf_location_rule_match_level', 10, 4);
+// add_filter('acf/location/rule_match/menu_level', 'acf_location_rule_match_level', 10, 4);
 function acf_location_rule_match_level($match, $rule, $options, $field_group) {
   $current_screen = get_current_screen();
   if ($current_screen->base == 'nav-menus') {

@@ -28,6 +28,8 @@ export default {
     itemType: function (item) {
       if (item.children === undefined || item.children.length == 0) {
         return 'SimpleLink'
+      } else if (item.dropdown_type === 'advanced') {
+        return 'LargeDropdown'
       } else {
         return 'SmallDropdown'
       }
