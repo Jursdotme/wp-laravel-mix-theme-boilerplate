@@ -19,50 +19,49 @@
       </svg>
     </button>
 
-    <!--
-          'Solutions' flyout menu, show/hide based on flyout menu state.
+    <transition
+      enter-active-class="transition ease-out duration-200"
+      enter-from-class="opacity-0 translate-y-1"
+      enter-to-class="opacity-100 translate-y-0"
+      leave-active-class="transition ease-in duration-150"
+      leave-from-class="opacity-100 translate-y-0"
+      leave-to-class="opacity-0 translate-y-1"
+    >
+      <div v-show="isOpen" class="absolute z-10 -ml-4 mt-3 transform w-screen max-w-md lg:max-w-2xl lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
+        <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
+          <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
+            <a v-for="item in regular_items" :key="item.id" :href="item.url" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
+              <template v-if="item.icon">
+                <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white sm:h-12 sm:w-12">
+                  <img :src="item.icon.sizes.thumbnail" class="text-white" />
+                </div>
+                <div class="ml-4">
+                  <p class="text-base font-medium text-gray-900">{{ item.title }}</p>
+                  <p class="mt-1 text-sm text-gray-500">{{ item.description }}</p>
+                </div>
+              </template>
 
-          Entering: "transition ease-out duration-200"
-            From: "opacity-0 translate-y-1"
-            To: "opacity-100 translate-y-0"
-          Leaving: "transition ease-in duration-150"
-            From: "opacity-100 translate-y-0"
-            To: "opacity-0 translate-y-1"
-        -->
-    <div v-show="isOpen" class="absolute z-10 -ml-4 mt-3 transform w-screen max-w-md lg:max-w-2xl lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
-      <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
-        <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
-          <a v-for="item in regular_items" :key="item.id" :href="item.url" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
-            <template v-if="item.icon">
-              <div class="flex-shrink-0 flex items-center justify-center h-10 w-10 rounded-md bg-indigo-500 text-white sm:h-12 sm:w-12">
-                <img :src="item.icon.sizes.thumbnail" class="text-white" />
-              </div>
-              <div class="ml-4">
-                <p class="text-base font-medium text-gray-900">{{ item.title }}</p>
-                <p class="mt-1 text-sm text-gray-500">{{ item.description }}</p>
-              </div>
-            </template>
+              <template v-else>
+                <div>
+                  <p class="text-base font-medium text-gray-900">{{ item.title }}</p>
+                  <p class="mt-1 text-sm text-gray-500">{{ item.description }}</p>
+                </div>
+              </template>
+            </a>
+          </div>
 
-            <template v-else>
-              <div>
-                <p class="text-base font-medium text-gray-900">{{ item.title }}</p>
-                <p class="mt-1 text-sm text-gray-500">{{ item.description }}</p>
+          <div class="p-5 bg-gray-50 sm:p-8">
+            <a v-for="item in featured_items" :key="item.id" :href="item.url" class="-m-3 p-3 flow-root rounded-md hover:bg-gray-100">
+              <div class="flex items-center">
+                <div class="text-base font-medium text-gray-900">{{ item.title }}</div>
+                <span class="ml-3 inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-indigo-100 text-indigo-800"> {{ item.pill_label }} </span>
               </div>
-            </template>
-          </a>
-        </div>
-
-        <div class="p-5 bg-gray-50 sm:p-8">
-          <a v-for="item in featured_items" :key="item.id" :href="item.url" class="-m-3 p-3 flow-root rounded-md hover:bg-gray-100">
-            <div class="flex items-center">
-              <div class="text-base font-medium text-gray-900">{{ item.title }}</div>
-              <span class="ml-3 inline-flex items-center px-3 py-0.5 rounded-full text-xs font-medium leading-5 bg-indigo-100 text-indigo-800"> {{ item.pill_label }} </span>
-            </div>
-            <p class="mt-1 text-sm text-gray-500">{{ item.description }}</p>
-          </a>
+              <p class="mt-1 text-sm text-gray-500">{{ item.description }}</p>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 
