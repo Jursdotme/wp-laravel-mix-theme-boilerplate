@@ -2,6 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-a {
-  color: red;
+.max-width {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
 }

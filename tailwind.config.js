@@ -4,7 +4,14 @@ module.exports = {
     './templates/**/**/*.vue',
     './header.php',
     './index.php',
-    './footer.php'
+    './footer.php',
+    './404.php',
+    './archive.php',
+    './front-page.php',
+    './page.php',
+    './searcg.php',
+    './sidebar.php',
+    './single.php',
   ],
   theme: {
     extend: {},

@@ -1,4 +1,4 @@
-<div class="prose">
+<div class="prose mx-auto">
     <div class="Example__inner">
 
         <h1 class="Example__title">WP Laravel Mix Theme Boilerplate</h1>
