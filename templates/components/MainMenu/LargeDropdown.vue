@@ -1,7 +1,13 @@
 <template>
   <div class="relative">
     <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" -->
-    <button @click="isOpen = !isOpen" type="button" class="text-gray-500 group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-expanded="false">
+    <button
+      v-click-outside="onClickOutside"
+      @click="isOpen = !isOpen"
+      type="button"
+      class="text-gray-500 group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      aria-expanded="false"
+    >
       <span>{{ item.title }}</span>
       <!--
             Heroicon name: solid/chevron-down
@@ -23,7 +29,7 @@
             From: "opacity-100 translate-y-0"
             To: "opacity-0 translate-y-1"
         -->
-    <div v-if="isOpen" class="absolute z-10 -ml-4 mt-3 transform w-screen max-w-md lg:max-w-2xl lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
+    <div v-show="isOpen" class="absolute z-10 -ml-4 mt-3 transform w-screen max-w-md lg:max-w-2xl lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
       <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
         <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8 lg:grid-cols-2">
           <a v-for="item in regular_items" :key="item.id" :href="item.url" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
@@ -61,6 +67,8 @@
 </template>
 
 <script>
+import vClickOutside from 'click-outside-vue3'
+
 export default {
   data() {
     return {
@@ -82,6 +90,15 @@ export default {
     },
     featured_items() {
       return this.item.children.filter((children) => children.featured == true)
+    },
+  },
+
+  directives: {
+    clickOutside: vClickOutside.directive,
+  },
+  methods: {
+    onClickOutside(event) {
+      this.isOpen = false
     },
   },
 }

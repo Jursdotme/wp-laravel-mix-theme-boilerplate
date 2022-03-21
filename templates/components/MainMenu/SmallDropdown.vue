@@ -1,7 +1,13 @@
 <template>
   <div class="relative">
     <!-- Item active: "text-gray-900", Item inactive: "text-gray-500" -->
-    <button @click="isOpen = !isOpen" type="button" class="text-gray-500 group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" aria-expanded="false">
+    <button
+      v-click-outside="onClickOutside"
+      @click="isOpen = !isOpen"
+      type="button"
+      class="text-gray-500 group bg-white rounded-md inline-flex items-center text-base font-medium hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+      aria-expanded="false"
+    >
       <span>{{ item.title }}</span>
       <!--
             Heroicon name: solid/chevron-down
@@ -37,6 +43,8 @@
 </template>
 
 <script>
+import vClickOutside from 'click-outside-vue3'
+
 export default {
   data() {
     return {
@@ -50,6 +58,15 @@ export default {
       default: function () {
         return {}
       },
+    },
+  },
+
+  directives: {
+    clickOutside: vClickOutside.directive,
+  },
+  methods: {
+    onClickOutside(event) {
+      this.isOpen = false
     },
   },
 }

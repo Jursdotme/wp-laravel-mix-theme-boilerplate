@@ -6,6 +6,7 @@ const mainNav = createApp({
 });
 mainNav.mount("#page-header")
 
+
 // you can import modules from the theme lib or even from
 // NPM packages if they support it…
 // import ExampleComponent1 from "./components/ExampleComponent1";
