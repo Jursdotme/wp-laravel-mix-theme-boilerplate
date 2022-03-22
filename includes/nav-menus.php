@@ -9,6 +9,7 @@ function register_my_menus() {
       'primary-desktop-menu' => __('Primary Desktop Menu'),
       'primary-mobile-menu' => __('Primary Mobile Menu'),
       'secondary-mobile-menu' => __('Secondary Mobile Menu'),
+      'footer-menu' => __(' Footer Menu'),
     )
   );
 }
@@ -42,6 +43,12 @@ function get_secondary_mobile_menu() {
   return wp_get_nav_menu_items($menus['secondary-mobile-menu']);
 }
 
+function get_footer_menu() {
+  $menus = get_nav_menu_locations();
+  // Replace your menu name, slug or ID carefully
+  return wp_get_nav_menu_items($menus['footer-menu']);
+}
+
 
 
 
@@ -62,6 +69,12 @@ add_action('rest_api_init', function () {
     'methods'  => WP_REST_Server::READABLE,
     // 'methods' => 'GET',
     'callback' => 'get_secondary_mobile_menu',
+    'permission_callback' => '__return_true'
+  ));
+  register_rest_route('wp/v2', 'footer_menu', array(
+    'methods'  => WP_REST_Server::READABLE,
+    // 'methods' => 'GET',
+    'callback' => 'get_footer_menu',
     'permission_callback' => '__return_true'
   ));
 });

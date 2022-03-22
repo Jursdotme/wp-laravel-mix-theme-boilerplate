@@ -1,10 +1,16 @@
 import { createApp, h } from 'vue'
 import PageHeader from './../../templates/components/PageHeader.vue';
+import FooterNavigation from './../../templates/components/FooterNavigation.vue';
 
-const mainNav = createApp({
+const pageHeader = createApp({
   render: () => h(PageHeader)
 });
-mainNav.mount("#page-header")
+pageHeader.mount("#page-header")
+
+const footerNav = createApp({
+  render: () => h(FooterNavigation)
+});
+footerNav.mount("#footer-navigation")
 
 
 // you can import modules from the theme lib or even from
